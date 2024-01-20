@@ -1,0 +1,226 @@
+DROP TABLE IF EXISTS type_of_equipment;
+CREATE TABLE type_of_equipment (
+     type_of_equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+         type_of_equipment_name VARCHAR(30)
+);
+INSERT INTO type_of_equipment VALUES(1,'Постоянный свет');
+INSERT INTO type_of_equipment VALUES(2,'Фоны');
+INSERT INTO type_of_equipment VALUES(3,'Стойки и держатели');
+INSERT INTO type_of_equipment VALUES(4,'Фотобоксы');
+INSERT INTO type_of_equipment VALUES(5,'Отражатели');
+INSERT INTO type_of_equipment VALUES(6,'Штативы');
+INSERT INTO type_of_equipment VALUES(7,'Системы синхронизации');
+INSERT INTO type_of_equipment VALUES(8,'Столы для съемки');
+
+DROP TABLE IF EXISTS color;
+CREATE TABLE color (
+     color_id INTEGER PRIMARY KEY AUTOINCREMENT,
+         color_name VARCHAR(30)
+);
+INSERT INTO color VALUES(1,'Чёрный');
+INSERT INTO color VALUES(2,'Белый');
+INSERT INTO color VALUES(3,'Синий');
+INSERT INTO color VALUES(4,'Зелёный');
+INSERT INTO color VALUES(5,'Серый');
+INSERT INTO color VALUES(6,'Серебряный');
+
+DROP TABLE IF EXISTS company;
+CREATE TABLE company (
+       company_id INTEGER PRIMARY KEY AUTOINCREMENT,
+           company_name VARCHAR(40)
+);
+INSERT INTO company VALUES(1,'Grifon');
+INSERT INTO company VALUES(2,'Falcon');
+INSERT INTO company VALUES(3,'FST');
+INSERT INTO company VALUES(4,'Manfrotto');
+INSERT INTO company VALUES(5,'Gobox');
+INSERT INTO company VALUES(6,'Benro');
+
+DROP TABLE IF EXISTS photographer;
+CREATE TABLE photographer (
+       photographer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+           photographer_name VARCHAR(30)
+);
+INSERT INTO photographer VALUES(1,'Пак К.С.');
+INSERT INTO photographer VALUES(2,'Сидорова С.А.');
+INSERT INTO photographer VALUES(3,'Федоров П.Р.');
+INSERT INTO photographer VALUES(4,'Абрамова А.А.');
+
+DROP TABLE IF EXISTS equipment;
+CREATE TABLE equipment (
+      equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title VARCHAR(80),
+     color_id int,
+      company_id INT,
+      Year_of_delivery INT,
+      available_numbers INT,
+      FOREIGN KEY  (color_id)  REFERENCES color  (color_id) ON DELETE CASCADE,
+      FOREIGN KEY (company_id)  REFERENCES company (company_id) ON DELETE CASCADE
+);
+INSERT INTO equipment VALUES(1,'Eyes KeyLight 145 SB5050 KIT',1,2,2018,2);
+INSERT INTO equipment VALUES(2,'2 x FL 305-57',2,1,2014,0);
+INSERT INTO equipment VALUES(3,'OB60-50 LED Kit',6,1,2021,2);
+INSERT INTO equipment VALUES(4,'RIF-3MC',3,1,2019,1);
+INSERT INTO equipment VALUES(5,'LED-1682 KIT',3,3,2020,2);
+INSERT INTO equipment VALUES(6,'Coal 9700 1х1,3 м',1,4,2016,2);
+INSERT INTO equipment VALUES(7,' Twist 180 х 210 B/G',4,6,2023,0);
+INSERT INTO equipment VALUES(8,'Gemini GS200II',1,5,2018,1);
+INSERT INTO equipment VALUES(9,'Eyes BGK-0613',2,2,2018,3);
+INSERT INTO equipment VALUES(10,'ET-503 KIT',5,3,2022,3);
+INSERT INTO equipment VALUES(11,'Matt Dove Grey 9010 1х1,3 м',6,4,2019,2);
+INSERT INTO equipment VALUES(12,'Eyes FEST-083/W-803',1,2,2015,1);
+INSERT INTO equipment VALUES(13,'2100nb',1,1,2022,2);
+INSERT INTO equipment VALUES(14,'E250-F',1,5,2017,1);
+INSERT INTO equipment VALUES(15,'LS-210',2,3,2019,3);
+INSERT INTO equipment VALUES(16,'B-101 3х5',6,1,2021,1);
+INSERT INTO equipment VALUES(17,'LT-60',2,3,2020,3);
+INSERT INTO equipment VALUES(18,'Eyes CFR-42GS HL',3,4,2020,2);
+INSERT INTO equipment VALUES(19,'2.72х11 Light Blue 1003',3,3,2021,1);
+INSERT INTO equipment VALUES(20,'A2573FS4PRO',1,6,2018,1);
+INSERT INTO equipment VALUES(21,'VBRT2201 White 2.1 Х 11м',2,5,2020,0);
+INSERT INTO equipment VALUES(22,'RTR-16',1,1,2021,4);
+INSERT INTO equipment VALUES(23,'Eyes FEL-2900ST.0',6,2,2020,1);
+INSERT INTO equipment VALUES(24,'TTL Nikon',6,6,2022,2);
+INSERT INTO equipment VALUES(25,'2410nb',5,1,2024,3);
+INSERT INTO equipment VALUES(26,'1052BAC Compact Stand',4,4,2017,1);
+INSERT INTO equipment VALUES(27,'PT-60100',4,3,2020,2);
+INSERT INTO equipment VALUES(28,'Eyes PBF-40AB',3,5,2019,1);
+INSERT INTO equipment VALUES(29,'Eyes FEL-1800A/B.0',1,2,2018,2);
+INSERT INTO equipment VALUES(37,'006 KIT',5,2,2021,3);
+INSERT INTO equipment VALUES(39,'FRHN05C+VX20',3,6,2022,1);
+INSERT INTO equipment VALUES(40,'DF-01 90 см',5,5,2022,4);
+INSERT INTO equipment VALUES(41,'1004BAC-3 3-Kit Master Stand',1,4,2022,1);
+
+DROP TABLE IF EXISTS equipment_type_of_equipment;
+CREATE TABLE equipment_type_of_equipment (
+      equipment_type_of_equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      equipment_id INT,
+     type_of_equipment_id INT,
+      FOREIGN KEY (equipment_id)  REFERENCES equipment (equipment_id) ON DELETE CASCADE,
+      FOREIGN KEY  (type_of_equipment_id)  REFERENCES type_of_equipment  (type_of_equipment_id) ON DELETE CASCADE
+);
+INSERT INTO equipment_type_of_equipment VALUES(1,1,4);
+INSERT INTO equipment_type_of_equipment VALUES(2,1,5);
+INSERT INTO equipment_type_of_equipment VALUES(3,2,4);
+INSERT INTO equipment_type_of_equipment VALUES(4,2,5);
+INSERT INTO equipment_type_of_equipment VALUES(5,3,6);
+INSERT INTO equipment_type_of_equipment VALUES(6,4,3);
+INSERT INTO equipment_type_of_equipment VALUES(7,5,2);
+INSERT INTO equipment_type_of_equipment VALUES(8,6,1);
+INSERT INTO equipment_type_of_equipment VALUES(9,7,7);
+INSERT INTO equipment_type_of_equipment VALUES(10,8,8);
+INSERT INTO equipment_type_of_equipment VALUES(11,8,1);
+INSERT INTO equipment_type_of_equipment VALUES(12,9,8);
+INSERT INTO equipment_type_of_equipment VALUES(13,9,5);
+INSERT INTO equipment_type_of_equipment VALUES(14,10,1);
+INSERT INTO equipment_type_of_equipment VALUES(15,11,6);
+INSERT INTO equipment_type_of_equipment VALUES(16,12,8);
+INSERT INTO equipment_type_of_equipment VALUES(17,12,6);
+INSERT INTO equipment_type_of_equipment VALUES(18,13,3);
+INSERT INTO equipment_type_of_equipment VALUES(19,14,2);
+INSERT INTO equipment_type_of_equipment VALUES(20,15,2);
+INSERT INTO equipment_type_of_equipment VALUES(21,16,2);
+INSERT INTO equipment_type_of_equipment VALUES(22,17,1);
+INSERT INTO equipment_type_of_equipment VALUES(23,18,5);
+INSERT INTO equipment_type_of_equipment VALUES(24,19,1);
+INSERT INTO equipment_type_of_equipment VALUES(25,20,7);
+INSERT INTO equipment_type_of_equipment VALUES(26,21,3);
+INSERT INTO equipment_type_of_equipment VALUES(27,22,1);
+INSERT INTO equipment_type_of_equipment VALUES(28,23,1);
+INSERT INTO equipment_type_of_equipment VALUES(29,24,7);
+INSERT INTO equipment_type_of_equipment VALUES(30,25,7);
+INSERT INTO equipment_type_of_equipment VALUES(31,26,4);
+INSERT INTO equipment_type_of_equipment VALUES(32,26,5);
+INSERT INTO equipment_type_of_equipment VALUES(33,27,7);
+INSERT INTO equipment_type_of_equipment VALUES(34,28,7);
+INSERT INTO equipment_type_of_equipment VALUES(35,29,2);
+INSERT INTO equipment_type_of_equipment VALUES(36,37,8);
+INSERT INTO equipment_type_of_equipment VALUES(37,37,2);
+INSERT INTO equipment_type_of_equipment VALUES(38,38,2);
+INSERT INTO equipment_type_of_equipment VALUES(39,39,2);
+INSERT INTO equipment_type_of_equipment VALUES(40,40,1);
+INSERT INTO equipment_type_of_equipment VALUES(41,41,4);
+INSERT INTO equipment_type_of_equipment VALUES(42,41,5);
+
+DROP TABLE IF EXISTS equipment_photographer;
+CREATE TABLE equipment_photographer (
+      equipment_photographer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      equipment_id int,
+      photographer_id INT,
+          borrow_date DATE,
+          return_date DATE,
+      FOREIGN KEY (equipment_id)  REFERENCES equipment (equipment_id) ON DELETE CASCADE,
+      FOREIGN KEY (photographer_id)  REFERENCES photographer (photographer_id) ON DELETE CASCADE
+);
+INSERT INTO equipment_photographer VALUES(1,4,4,'2020-09-11','2020-09-24');
+INSERT INTO equipment_photographer VALUES(2,12,1,'2020-09-11','2023-06-08');
+INSERT INTO equipment_photographer VALUES(3,29,2,'2020-09-17','2020-10-10');
+INSERT INTO equipment_photographer VALUES(4,27,4,'2020-09-18',NULL);
+INSERT INTO equipment_photographer VALUES(5,15,1,'2020-09-18','2020-10-04');
+INSERT INTO equipment_photographer VALUES(6,18,3,'2020-09-21','2020-10-09');
+INSERT INTO equipment_photographer VALUES(7,22,4,'2020-09-25','2020-10-10');
+INSERT INTO equipment_photographer VALUES(8,1,4,'2020-09-28','2020-10-07');
+INSERT INTO equipment_photographer VALUES(9,26,1,'2020-09-30',NULL);
+INSERT INTO equipment_photographer VALUES(10,27,2,'2020-10-05','2020-10-13');
+INSERT INTO equipment_photographer VALUES(11,18,2,'2020-10-06','2022-02-19');
+INSERT INTO equipment_photographer VALUES(12,26,2,'2020-10-06','2020-10-26');
+INSERT INTO equipment_photographer VALUES(13,11,1,'2020-10-06','2020-10-13');
+INSERT INTO equipment_photographer VALUES(14,3,2,'2020-10-08','2020-10-27');
+INSERT INTO equipment_photographer VALUES(15,20,3,'2020-10-08','2020-10-23');
+INSERT INTO equipment_photographer VALUES(16,20,3,'2020-10-09','2020-10-29');
+INSERT INTO equipment_photographer VALUES(17,2,2,'2020-10-09','2020-10-12');
+INSERT INTO equipment_photographer VALUES(18,27,1,'2020-10-13','2020-10-17');
+INSERT INTO equipment_photographer VALUES(19,28,4,'2020-10-15','2020-11-04');
+INSERT INTO equipment_photographer VALUES(20,5,1,'2020-10-15','2020-10-18');
+INSERT INTO equipment_photographer VALUES(21,29,1,'2020-10-15','2020-10-29');
+INSERT INTO equipment_photographer VALUES(22,3,2,'2020-10-15',NULL);
+INSERT INTO equipment_photographer VALUES(23,9,3,'2020-10-16','2020-10-19');
+INSERT INTO equipment_photographer VALUES(24,15,2,'2020-10-17','2020-11-08');
+INSERT INTO equipment_photographer VALUES(25,8,4,'2020-10-19',NULL);
+INSERT INTO equipment_photographer VALUES(26,18,1,'2020-10-20','2023-06-08');
+INSERT INTO equipment_photographer VALUES(27,23,1,'2020-10-21',NULL);
+INSERT INTO equipment_photographer VALUES(28,4,2,'2020-10-22','2020-10-28');
+INSERT INTO equipment_photographer VALUES(29,26,3,'2020-10-23','2020-10-28');
+INSERT INTO equipment_photographer VALUES(30,5,4,'2020-10-24','2020-11-01');
+INSERT INTO equipment_photographer VALUES(31,8,2,'2020-10-28','2020-11-18');
+INSERT INTO equipment_photographer VALUES(32,21,1,'2020-10-30',NULL);
+INSERT INTO equipment_photographer VALUES(33,20,1,'2020-10-30','2020-11-26');
+INSERT INTO equipment_photographer VALUES(34,14,4,'2020-10-30','2020-11-10');
+INSERT INTO equipment_photographer VALUES(35,8,2,'2020-11-01','2022-02-19');
+INSERT INTO equipment_photographer VALUES(36,11,4,'2020-11-06','2020-11-26');
+INSERT INTO equipment_photographer VALUES(37,28,4,'2020-11-09','2020-11-28');
+INSERT INTO equipment_photographer VALUES(38,14,3,'2020-11-14',NULL);
+INSERT INTO equipment_photographer VALUES(39,24,2,'2020-11-15','2022-02-19');
+INSERT INTO equipment_photographer VALUES(40,5,1,'2020-11-17',NULL);
+INSERT INTO equipment_photographer VALUES(41,11,3,'2020-11-21','2020-12-12');
+INSERT INTO equipment_photographer VALUES(42,14,1,'2020-11-23','2022-02-19');
+INSERT INTO equipment_photographer VALUES(43,4,2,'2020-11-23',NULL);
+INSERT INTO equipment_photographer VALUES(44,23,3,'2020-11-28',NULL);
+INSERT INTO equipment_photographer VALUES(45,21,3,'2020-11-29','2020-12-21');
+INSERT INTO equipment_photographer VALUES(46,14,1,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(47,14,1,'2022-02-19','2024-01-19');
+INSERT INTO equipment_photographer VALUES(48,7,1,'2022-02-19','2022-02-19');
+INSERT INTO equipment_photographer VALUES(49,7,1,'2022-02-19','2022-02-19');
+INSERT INTO equipment_photographer VALUES(50,7,1,'2022-02-19','2022-02-26');
+INSERT INTO equipment_photographer VALUES(51,13,4,'2022-02-19','2022-02-19');
+INSERT INTO equipment_photographer VALUES(52,10,3,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(53,6,2,'2022-02-19','2022-02-19');
+INSERT INTO equipment_photographer VALUES(54,16,2,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(55,9,4,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(56,8,4,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(57,1,1,'2022-02-19',NULL);
+INSERT INTO equipment_photographer VALUES(58,13,1,'2022-02-19','2022-02-19');
+INSERT INTO equipment_photographer VALUES(59,10,4,'2022-02-26',NULL);
+INSERT INTO equipment_photographer VALUES(60,9,3,'2022-02-26',NULL);
+INSERT INTO equipment_photographer VALUES(61,24,1,'2022-03-09','2022-03-09');
+INSERT INTO equipment_photographer VALUES(62,13,2,'2023-06-08',NULL);
+INSERT INTO equipment_photographer VALUES(63,24,3,'2023-06-08',NULL);
+INSERT INTO equipment_photographer VALUES(64,2,4,'2024-01-20',NULL);
+DELETE FROM sqlite_sequence;
+INSERT INTO sqlite_sequence VALUES( 'type_of_equipment',8);
+INSERT INTO sqlite_sequence VALUES( 'color',6);
+INSERT INTO sqlite_sequence VALUES('company',6);
+INSERT INTO sqlite_sequence VALUES('photographer',4);
+INSERT INTO sqlite_sequence VALUES('equipment',41);
+INSERT INTO sqlite_sequence VALUES('equipment_type_of_equipment',42);
+INSERT INTO sqlite_sequence VALUES('equipment_photographer',64);

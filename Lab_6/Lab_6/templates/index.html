@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+        <title> Карточка фотографа </title>
+        
+        {% macro render_table(table_name, relation, id) %}
+            {% if len(relation) != 0 %}
+            <div class="table">
+                <p>
+                    <b>{{table_name}}</b>
+                </p>
+                {% set n = len(relation) %}
+                <table>
+                    <thead>
+                        <tr>
+                            {% for name in relation.dtypes.index %}
+                                {% if name != "equipment_photographer_id" %}
+                                    <th>{{name}}</th>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(n) %}
+                        <tr>
+                            {% for name in relation.dtypes.index %}
+                                {% if name == "Дата_возврата" and relation.loc[i, name] == None and name != "equipment_photographer_id" %}
+                                    <td>
+                                        <button type="submit" name="return_equipment" value={{relation.loc[i, "equipment_photographer_id"]}}>Сдать</button>
+                                    </td>
+                                {% elif name != "equipment_photographer_id" %}
+                                    <td>
+                                        {{relation.loc[i, name]}}
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>
+                Выбранный фотограф не брал оборудование.
+            </p>
+            {% endif %}
+        {% endmacro %}
+        {% macro render_select(list, selected_id) %}
+            <select name="photographer">
+                {% set n = len(list) %}
+                {% for i in range(n) %}
+                    {% set id_r = list.loc[i, "photographer_id"] %}
+                    {% if id_r == selected_id %}
+                        <option selected value={{id_r}}>
+                    {% else %}
+                        <option value="{{id_r}}">
+                    {% endif %}
+                    {{list.loc[i, "photographer_name"]}}
+                    </option>
+                {% endfor %}
+            </select>
+        {% endmacro %}
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class ="active"><a href={{ url_for("index")}}>Фотограф</a></li>
+
+            </ul>
+        </div>
+        <div class="block">
+            <p>
+                <form action='' method ="get">
+                    Фотограф:
+                    {{render_select(combo_box, photographer_id)}}
+                    <input type="submit" value="Найти">
+                </form>
+            </p>
+            <p>
+                <form action ="{{url_for("new_photographer")}}" method="get">
+                    <input type="submit" value="Новый фотограф">
+                </form>
+            </p>
+            <form action="{{url_for("index")}}" method="get">
+                {{ render_table("Карточка", equipment_photographer, "equipment_photographer_id") }}
+            </form>
+            <p>
+                <form action ={{url_for("search")}} method="get">
+                    <input type="submit" value="Взять оборудование">
+                </form>
+            </p>
+        </div>
+    </body>
+</html>

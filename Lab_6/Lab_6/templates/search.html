@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+        <title> Карточка фотографа </title>
+        
+        {% macro render_equipment_card(equipment) %}
+
+            <form method="get" class="equipment_container">
+                {% for i in range(len(equipment)) %}
+                    <ul class="equipment_card">
+                        {% for name in equipment.dtypes.index %}
+                        <li>{{name}}: <b>{{equipment.loc[i, name]}}</b></li>
+                        {% endfor %}
+                        {% if equipment.loc[i, "Количество"] == 0 %}
+                            <button disabled type="submit" name="borrow_equipment" value={{equipment.loc[i, "equipment_id"]}}>Выбрать</button>
+                        {% else %}
+                            <button type="submit" name="borrow_equipment" value={{equipment.loc[i, "equipment_id"]}}>Выбрать</button>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+            </form method="get">
+        {% endmacro %}
+        
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class ="active"><a href={{ url_for("index")}}>Поиск оборудования</a></li>
+            </ul>
+        </div>
+        
+        <form action="{{url_for("search")}}" class="filter_menu">
+            {% if len(chosen_color) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Цвет</b></summary>
+                {% for i in range(len(color)) %}
+                <p>
+                    {% if color.loc[i, "color_name"] in chosen_color %}
+                        <label><input checked type="checkbox" name="{{color.loc[i, "color_name"]}}" value="{{color.loc[i, "color_id"]}}">{{color.loc[i, "color_name"]}} ({{color.loc[i, "count"]}})</label>
+                    {% else %}
+                        <label><input type="checkbox" name="{{color.loc[i, "color_name"]}}" value="{{color.loc[i, "color_id"]}}">{{color.loc[i, "color_name"]}} ({{color.loc[i, "count"]}})</label>
+                    {% endif %}
+                </p>
+                {% endfor %}
+            </details>
+            {% if len(chosen_type_of_equipment) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Тип оборудования</b></summary>
+                {% for i in range(len(type_of_equipment)) %}
+                    <p>
+                        {% if type_of_equipment.loc[i, "type_of_equipment_name"] in chosen_type_of_equipment %}
+                            <label><input checked type="checkbox" name="{{type_of_equipment.loc[i, "type_of_equipment_name"]}}" value="{{type_of_equipment.loc[i, "type_of_equipment_id"]}}">{{type_of_equipment.loc[i, "type_of_equipment_name"]}}  ({{type_of_equipment.loc[i, "count"]}})</label>
+                        {% else %}
+                            <label><input type="checkbox" name="{{type_of_equipment.loc[i, "type_of_equipment_name"]}}" value="{{type_of_equipment.loc[i, "type_of_equipment_id"]}}">{{type_of_equipment.loc[i, "type_of_equipment_name"]}}  ({{type_of_equipment.loc[i, "count"]}})</label>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            </details>
+            {% if len(chosen_company) != 0 %}
+                <details open>
+            {% else %}
+                <details>
+            {% endif %}
+                <summary><b>Производитель</b></summary>
+                {% for i in range(len(company)) %}
+                    <p>
+                        {% if company.loc[i, "company_name"] in chosen_company %}
+                            <label><input checked type="checkbox" name="{{company.loc[i, "company_name"]}}" value="{{company.loc[i, "company_id"]}}">{{company.loc[i, "company_name"]}}  ({{company.loc[i, "count"]}})</label>
+                        {% else %}
+                            <label><input type="checkbox" name="{{company.loc[i, "company_name"]}}" value="{{company.loc[i, "company_id"]}}">{{company.loc[i, "company_name"]}}  ({{company.loc[i, "count"]}})</label>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            </details>
+            <input type="submit" name="search" value="Найти">
+            <input type="submit" name="clear_filter" value="Очистить">
+        </form>
+
+        <div class="block">
+            <form action="{{url_for("index")}}" method="get">
+                <input type="submit" value="Не выбирать оборудование">
+            </form>
+            <p>
+                <font color="red">
+                    {% if len(chosen_color) != 0 %}
+                        Цвет: 
+                        {% for item in chosen_color%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                    {% if len(chosen_type_of_equipment) != 0 %}
+                        Тип оборудования: 
+                        {% for item in chosen_type_of_equipment%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                    {% if len(chosen_company) != 0 %}
+                        Производитель: 
+                        {% for item in chosen_company%}
+                            {{item}},
+                        {% endfor %}
+                    {% endif %}
+                </font>
+            </p>
+            {{render_equipment_card(equipment)}}
+        </div>
+    </body>
+</html>

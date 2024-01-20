@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+        <title> Карточка фотографа </title>        
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class ="active"><a href={{ url_for("index")}}>Новый фотограф</a></li>
+            </ul>
+        </div>
+        <div class="block">
+            <p>
+                <form action='{{url_for("new_photographer")}}' method ="get">
+                    <p>
+                        Имя фотографа:
+                        <input type="text" name="new_photographer">
+                    </p>
+                    <input type="submit" name="add" value="Добавить фотографа">
+                    <input type="submit" name="cancel" value="Отменить">
+                </form>
+            </p>
+        </div>
+    </body>
+</html>
